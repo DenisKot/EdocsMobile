@@ -1,0 +1,153 @@
+﻿<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+    <!-- Important -->
+    <meta http-equiv="Content-Security-Policy" content="default-src * 'unsafe-inline' 'unsafe-eval'; style-src 'self' 'unsafe-inline' 'unsafe-eval'; media-src *; script-src 'self' 'unsafe-inline' 'unsafe-eval'; connect-src *" />
+    <!--<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'">-->
+
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" />
+    <title>E-docs</title>
+    
+    <script type="text/javascript" src="js/popper.js"></script>
+    <script type="text/javascript" src="js/jquery-3.2.1.min.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/bootstrap.min.js"></script>
+
+    <script type="text/JavaScript" src="js/IIT/euutils.js"></script>
+    <script type="text/JavaScript" src="js/IIT/euscpt.js"></script>
+    <script type="text/JavaScript" src="js/IIT/euscpm.js"></script>
+    <script type="text/JavaScript" src="js/IIT/euscpManager.js"></script>
+    <script async type="text/javascript" src="js/IIT/euscp.js"></script>
+</head>
+
+<body>
+<div class="navbar navbar-default">
+    <div class="container">
+        <div class="navbar-header">
+            <a href="index.html" class="navbar-brand">Edocs</a>
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+        </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="browse.html">Browse</a>
+                </li>
+                <li>
+                    <a href="filepicker.html">FilePicker</a>
+                </li>
+                <li>
+                    <a href="sign.html">Sign</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Sign</h1>
+    <hr/>
+    <div id="sign-external">
+        <!--<div ng-if="isError" layout="row" layout-sm="column" layout-align="space-around">
+            <span class="error-color-style">Несподівана помилка</span>
+        </div>-->
+        <div style="width: 650px; height: 370px">
+            <span id="status" class="label label-info">(завантаження...)</span>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h4>Подписание</h4>
+                </div>
+                <div class="panel-body">
+                    <!--@*Upload sign*@-->
+                    <div class="row">
+                        <div class="col-md-3"><label style="padding:6px;">Файл ключа</label></div>
+                        <div class="col-md-6">
+                            <span class='label label-info' id="PKeyFileName"></span>
+                            <label class="btn btn-link" for="PKeyFileInput">
+                                <input id="PKeyFileInput" type="file" style="display:none"
+                                       onchange="$('#PKeyFileName').html(this.files[0].name)">
+                                Загрузить ключ
+                            </label>
+                        </div>
+                    </div>
+                    <!--@*Cert center*@-->
+                    <div id="PKCertsSelectZone">
+                        <div class="row">
+                            <div class="col-md-3"><label style="padding:6px;">Сертификат:</label></div>
+                            <div class="col-md-6">
+                                <span class='label label-info' id="PCertFileName"></span>
+                                <label class="btn btn-link" for="ChoosePKCertsInput">
+                                    <input id="ChoosePKCertsInput" type="file" style="display:none"
+                                           onchange="$('#PCertFileName').html(this.files[0].name)">
+                                    Загрузить сертификат
+                                </label>
+                            </div>
+                        </div>
+                        <br />
+                    </div>
+                    <!--Upload doc-->
+                    <!--<div class="row">
+                        <div class="col-md-3"><label>Файл для підпису:</label></div>
+                        <div class="col-md-6">
+                            <label class="btn btn-primary" for="FileToSign">
+                                <input id="FileToSign" type="file" style="display:none"
+                                       onchange="$('#upload-file-info').html(this.files[0].name)">
+                                Завантажити
+                            </label>
+                            <span class='label label-info' id="upload-file-info"></span>
+                        </div>
+                    </div>
+                    <br />-->
+                    <!--@*ЦСК*@-->
+                    <div class="row">
+                        <div class="col-md-3">
+                            <label style="padding:6px;">Выбор ЦСК</label>
+                        </div>
+                        <div class="col-md-9">
+                            <select id="CAsServersSelect" class="form-control" style="max-width:315px;"></select>
+                        </div>
+                    </div>
+                    <br />
+
+
+                    <!--@*Password*@-->
+                    <div class="row">
+                        <div class="col-md-3"><label style="padding:6px;">Пароль:</label></div>
+                        <div class="col-md-9">
+                            <div class="input-group">
+                                <input type="password" class="form-control" id="PKeyPassword" placeholder="введите пароль" style="width:200px">
+                                <button id="PKeyReadButton" type="button" class="btn btn-success" onclick="euSignTest.readPrivateKeyButtonClick()">Считать ключ</button>
+                                <span class="input-group-addon" style="opacity:0"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="owner-info" class="row col-md-offset-3" style="display:none;">
+                        <br />
+                        <label id="owner-info-label" class="label label-success"></label>
+                    </div>
+                    <br />
+                    <!--@*Sign file*@-->
+                    <!--<div class="row">
+                        <div class="col-md-3">
+                            <button id="SignFileButton" type="button" class="btn btn-success" onclick="euSignTest.signFile()" disabled="disabled">Подписать</button>
+                        </div>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+
+</html>

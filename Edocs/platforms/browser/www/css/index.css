@@ -1,0 +1,9 @@
+.file-container {
+    font-size: 18px;
+    vertical-align: center;
+    margin: 20px;
+}
+
+html, body, .ion-app, .ion-content {
+    background-color: transparent;
+}
