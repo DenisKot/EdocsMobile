@@ -4,8 +4,7 @@
   "displayName": "Edocs",
   "cordova": {
     "platforms": [
-      "browser",
-      "android"
+      "browser"
     ],
     "plugins": {
       "cordova-plugin-battery-status": {},
@@ -33,7 +32,6 @@
     }
   },
   "dependencies": {
-    "cordova-android": "^6.3.0",
     "cordova-browser": "^5.0.1",
     "cordova-plugin-android-permissions": "^1.0.0",
     "cordova-plugin-battery-status": "~1.1.1",
